@@ -1,49 +1,47 @@
-import axios from "axios";
 import { request } from "./request";
 
 const foodApi = {
-  getAllFood: async (paging,limit,type) => {
-    let query = `/Food?page=${paging}&limit=${limit}`
-    if(type && type != "All"){
-        query += `&type=${type}`
+  getAllFood: async (paging, limit, type) => {
+    let query = `/foods?page=${paging}&limit=${limit}`;
+    if (type && type !== "All") {
+      query += `&category=${type}`;
     }
     const response = await request.get(query);
     return response.data;
   },
-  getNewestFood: async (paging,limit) => {
-    let query = `/Food/Newest?page=${paging}&limit=${limit}`
+  getNewestFood: async (paging, limit) => {
+    let query = `/foods/Newest?page=${paging}&limit=${limit}`;
     const response = await request.get(query);
     return response.data;
   },
-  getSearchedFood: async (paging,limit,kw) => {
-    let query = `/Food/Search?page=${paging}&limit=${limit}`
-    if(kw){
-      query += `&kw=${kw}`
+  getSearchedFood: async (paging, limit, kw) => {
+    let query = `/foods/Search?page=${paging}&limit=${limit}`;
+    if (kw) {
+      query += `&kw=${kw}`;
     }
     const response = await request.get(query);
     return response.data;
   },
-  getFoodbyId: async (foodId) => {
-    let query = `/Food/getfood?id=${foodId}`
+  getFoodById: async (foodId) => {
+    let query = `/foods/getfood?id=${foodId}`;
     const response = await request.get(query);
     return response.data;
   },
   getAllFoodTypes: async () => {
-    let query = `/Category/getAllFoodTypes`;
+    let query = `/category`;
     const response = await request.get(query);
     return response.data;
   },
   getFoodType: async (typeId) => {
-    let query = `/Category/getFoodTypeById?id-${typeId}`;
+    let query = `/category?id=${typeId}`;
     const response = await request.get(query);
     return response.data;
   },
-  addFoodType:async(newType)=>{
-   
+  addFoodType: async (newType) => {
     try {
       const response = await request.post(
         "/Category/addType",
-        JSON.stringify(newType), // Send the body as a JSON string
+        JSON.stringify(newType),
         {
           headers: {
             "Content-Type": "application/json",
@@ -52,70 +50,73 @@ const foodApi = {
       );
       return response.data;
     } catch (error) {
-     return false
+      return false;
     }
   },
-  deleteFoodType:async(id)=>{
-    console.log(id)
-    try{
-      const response= await request.delete(`/Category/${id}`)
+  deleteFoodType: async (id) => {
+    try {
+      const response = await request.delete(`/Category/${id}`);
       return response.data;
-    }catch{
+    } catch (error) {
       return false;
     }
   },
-  updateType:async(type)=>{
-    try{
-      const response= await request.put(`/Category/${type.typeId}`, 
-        JSON.stringify(type), 
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      return response.data
-    }catch{
+  updateFoodType: async (type) => {
+    try {
+      const response = await request.put(
+        `/Category/${type.typeId}`,
+        JSON.stringify(type),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
       return false;
     }
   },
-  addFood: async(newFood)=>{
+  addFood: async (newFood) => {
     try {
       const response = await request.post(
         "/Food/addFood",
-        JSON.stringify(newFood), // Send the body as a JSON string
+        JSON.stringify(newFood),
         {
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
-      console.log(response.data)
       return response.data;
     } catch (error) {
-     return false;
-    }
-  },
-  updateFood:async(food)=>{
-    try{
-      const response= await request.put(`/Food/${food.FoodId}`, 
-        JSON.stringify(food), 
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      return response.data
-    }catch{
       return false;
     }
   },
-  deleteFood:async(id)=>{
-      try{
-        const response= await request.delete(`/Food/${id}`)
-        return response.data;
-      }catch{
-        return false;
+  updateFood: async (food) => {
+    try {
+      const response = await request.put(
+        `/Food/${food.FoodId}`,
+        JSON.stringify(food),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return false;
     }
-  }
-}
+  },
+  deleteFood: async (id) => {
+    try {
+      const response = await request.delete(`/Food/${id}`);
+      return response.data;
+    } catch (error) {
+      return false;
+    }
+  },
+};
+
 export default foodApi;

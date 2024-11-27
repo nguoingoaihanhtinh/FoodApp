@@ -38,12 +38,12 @@ const Category = () => {
         >
           {foodTypes.slice(0, 12).map((foodType) => (
             <Link
-              key={foodType.typeId}
+              key={foodType.TypeId}
               to={`/category/${foodType.typeId}`}
               state={{ foodType }} // Pass the full object here
               className="px-3 py-2 hover:bg-gray-100 cursor-pointer text-center"
             >
-              {foodType.nameType}
+              {foodType.NameType}
             </Link>
           ))}
         </div>

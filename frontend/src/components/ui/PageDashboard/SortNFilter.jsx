@@ -44,11 +44,11 @@ const SortNFilter = ({ setSelectedFoodType, setMaxPrice }) => { // Destructure p
             </Button>
             {foodTypes.map((type) => (
                 <Button
-                    key={type.typeId}
+                    key={type.TypeId}
                     className="bg-light-them-color hover:bg-orange-300 text-black hover:scale-105 w-full text-ellipsis overflow-hidden whitespace-nowrap"
                     onClick={() => setSelectedFoodType(type)} // Pass the selected type
                 >
-                    {type.nameType}
+                    {type.NameType}
                 </Button>
             ))}   
         </div>

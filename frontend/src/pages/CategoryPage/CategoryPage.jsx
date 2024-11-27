@@ -7,7 +7,7 @@ function CategoryPage() {
   const { foodType } = useParams();
   const location = useLocation();
   const passedFoodType = location.state?.foodType || null;
-  // console.log("food:",foodType)
+
   const [selectedFoodType, setSelectedFoodType] = useState(passedFoodType);
   const [sliderValue, setSliderValue] = useState([]);
 
@@ -20,7 +20,7 @@ function CategoryPage() {
   }, [foodType, passedFoodType]);
 
 
-  // console.log("Selected Food Type:", selectedFoodType);
+  console.log("Selected Food Type:", selectedFoodType);
   return (
     <section className='rounded-xl mx-5 h-full mt-20 min-w-md'>
       <div className="shopInfo">

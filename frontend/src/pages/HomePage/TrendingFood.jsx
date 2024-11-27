@@ -14,7 +14,7 @@ export default function TrendingFood() {
     console.log(response.data)
     if(response.status === "success"){
       setFood(response.data);
-      setTotal(response.pagination.totalItems)
+      setTotal(response.pagination.totalFoods)
     }
   }
   useEffect(() => {
@@ -37,17 +37,17 @@ export default function TrendingFood() {
       </div>
 
       <div className="grid grid-cols-4 space-x-4 mt-4">
-        {foods.map((el, idx) => {
+        {foods.map((item) => {
           return (
             <FoodCard
-              key={idx}
+              key={item.FoodId}
               img={
-                el.image1
+                item.Image1
               }
-              id={el.foodId}
-              title={el.name}
-              description={"Burger King"}
-              price={el.price}
+              id={item.FoodId}
+              title={item.Name}
+              description={item.Description}
+              price={item.Price}
             />
           );
         })}

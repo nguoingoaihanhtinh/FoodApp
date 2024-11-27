@@ -69,13 +69,13 @@ export default function SearchBox() {
           {foods.length > 0 ? (
             foods.map((item) => (
               <FoodCardHorizontal
-                id={item.foodId}
-                key={item.foodId}
-                img={item.image1}
-                title={item.name}
-                rating={item.rating}
-                description={item.description}
-                price={item.price}
+                id={item.FoodId}
+                key={item.FoodId}
+                img={item.Image1}
+                title={item.Name}
+                rating={item.Rating}
+                description={item.Description}
+                price={item.Price}
               />
             ))
           ) : (

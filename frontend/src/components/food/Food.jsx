@@ -12,10 +12,10 @@ const Food = ({selectedFoodType, sliderValue, searchQuery, setSearchQuery  }) =>
   // console.log("price",sliderValue)
   const getAllFoods = async () => {
     try {
-      const response = await foodApi.getAllFood(page, itemsPerPage, selectedFoodType?.nameType); // Pass selectedFoodType
+      const response = await foodApi.getAllFood(page, itemsPerPage, selectedFoodType?.NameType); // Pass selectedFoodType
       if (response.status === "success") {
         setFood(response.data);
-        setTotal(response.pagination.totalItems);
+        setTotal(response.pagination.totalFoods);
       }
     } catch (error) {
       console.error('Failed to fetch food items:', error);
@@ -29,14 +29,14 @@ const Food = ({selectedFoodType, sliderValue, searchQuery, setSearchQuery  }) =>
   },[selectedFoodType,page,searchQuery]) 
 
   const filteredFoods = foods.filter(food => {
-    const isWithinPriceRange = food.price <= sliderValue;
-    const matchesSearchQuery = searchQuery ? food.name.toLowerCase().includes(searchQuery.toLowerCase()) : true;
+    const isWithinPriceRange = food.Price <= sliderValue;
+    const matchesSearchQuery = searchQuery ? food.Name.toLowerCase().includes(searchQuery.toLowerCase()) : true;
     return isWithinPriceRange && matchesSearchQuery;
   });
   useEffect(() => {
     setTotal(searchQuery ? filteredFoods.length : foods.length);
   }, [filteredFoods, searchQuery, foods.length]);
-
+  console.log('filter',filteredFoods)
   // Function to clear the search
   const clearSearch = () => {
     setSearchQuery(''); // Clear the search query using the setter function
@@ -47,7 +47,7 @@ const Food = ({selectedFoodType, sliderValue, searchQuery, setSearchQuery  }) =>
         <section data-aos="fade-up" className="container ">
           <div className="heading flex justify-between items-center">
             <h1 className=" my-8 border-l-8 border-primary/50 py-2 pl-2 text-3xl font-bold ">
-                {searchQuery ? `Searched for "${searchQuery}"` : (selectedFoodType ? selectedFoodType.nameType : 'Best Food')}
+                {searchQuery ? `Searched for "${searchQuery}"` : (selectedFoodType ? selectedFoodType.NameType : 'Best Food')}
             </h1>
             {searchQuery && (
             <button 
@@ -61,17 +61,17 @@ const Food = ({selectedFoodType, sliderValue, searchQuery, setSearchQuery  }) =>
         
         
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 transition-all duration-300 ease-in-out">
-          {filteredFoods.map((el, idx) => {
+          {filteredFoods.map((item) => {
           return (
             <FoodCard
-              key={idx}
+              key={item.FoodId}
               img={
-                el.image1
+                item.Image1
               }
-              id={el.foodId}
-              title={el.name}
-              description={el.description}
-              price={el.price}
+              id={item.FoodId}
+              title={item.Name}
+              description={item.Description}
+              price={item.Price}
             />
           );
           })}

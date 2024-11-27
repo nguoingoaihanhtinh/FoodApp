@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { FaAngleRight } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 const types = ["All","Vietnamese Noodles", "Rice Dishes", "Soups", "Desserts", "Seafood"];
+
 export default function MenuCategory() {
   const [typeSlt, setTypeSlt] = useState(0);
   const [foods, setFood] = useState([]);
@@ -12,16 +13,17 @@ export default function MenuCategory() {
   const [page,setPage] = useState(1)
   const getAllFoods = async () => {
     const response = await foodApi.getAllFood(page,4,types[typeSlt])
-    console.log(response.data)
+    console.log('food',response.data)
     if(response.status === "success"){
+      console.log('pagination data:', response.pagination); 
       setFood(response.data);
-      setTotal(response.pagination.totalItems)
-
+      setTotal(response.pagination.totalFoods)
     }
   }
   useEffect(() => {
     getAllFoods();
   },[typeSlt,page]) 
+  console.log('total',total)
   return (
     <div className="mt-12">
       <div className="flex justify-between items-center">
@@ -61,17 +63,17 @@ export default function MenuCategory() {
       </div>
       <div className=""></div>
       <div className="grid grid-cols-4 space-x-4 mt-4">
-        {foods.map((el, idx) => {
+        {foods.map((item) => {
           return (
             <FoodCard
-              key={idx}
+              key={item.FoodId}
               img={
-                el.image1
+                item.Image1
               }
-              id={el.foodId}
-              title={el.name}
-              description={el.description}
-              price={el.price}
+              id={item.FoodId}
+              title={item.Name}
+              description={item.Description}
+              price={item.Price}
             />
           );
         })}
